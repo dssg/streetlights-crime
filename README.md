@@ -28,4 +28,13 @@ The approach also partially adjusts for variation in crime rates over time by co
 Specifically, we use Poisson Generalized Linear Models, which are useful for studying counts and rates.  Crime rates are modeled as a function of an outage indicators variable, fixed effects for each outage area, and a full set of monthly indicator varaibles to adjust estimates for the crime time trend.
 
 
+## The Project
+
+All of our programs are contained in the code folder.  The folder includes Python code that determines the number crimes occurring before, during, and after outages as well as R code that estimates our models.
+
+The following R libraries are needed to run our programs: plyr, doBy, reshape, glmmML.
+
+Tables, charts, and maps are in the results folder.  Our datasets are in the data folder. 
+
+Please see each folder for further documentation.
 
