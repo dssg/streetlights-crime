@@ -1,5 +1,7 @@
 This folder contains the datasets for this project 
 
+The four files together are inputs into the "Step1" file in the code folder
+
 Three datasets for outages are provided: Alley Lights, Street Lights (One Out), and Street Lights (All Out)
 
 These are outputs of the "Step0" file in the code folder 
