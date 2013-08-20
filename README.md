@@ -11,7 +11,7 @@ This project uses data from the [City of Chicago Data Portal](https://data.cityo
 
 ## The Problem: Why Study Outages and Crime?
 
-The [Chicago Department of Transportation](http://www.cityofchicago.org/city/en/depts/cdot.html) (CDOT) received reports that some alley and street light outages were purposefully caused.  The department was concerned that individuals may be causing outages with the intent to commit crime in darker areas.  CDOT contacted us to investigate whether there was in fact a relationship between outages and crime around the city.  CDOT can use the findings to determine if shortening outage durations can decrease crime.  The geographic detail we provide can be used to determine if certain outages should be prioritized in order to reduce crime. 
+The [Chicago Department of Transportation](http://www.cityofchicago.org/city/en/depts/cdot.html) (CDOT) received reports that some alley and street light outages were caused purposefully.  The department was concerned that individuals may be causing outages with the intent to commit crime in darker areas.  CDOT contacted us to investigate whether there was in fact a relationship between outages and crime around the city.  CDOT can use the findings to determine if shortening outage durations can decrease crime.  The geographic detail we provide can be used to determine if certain outages should be prioritized in order to reduce crime. 
 
 
 ## Methodological Challenges: Correlation vs. Causation
