@@ -1,11 +1,6 @@
-This folder contains the datasets for this project 
+This folder contains the datasets for this project. The four files together are the inputs into the "Step1" file in the code folder.
 
-Three datasets for outages are provided: Alley Lights, Street Lights (One Out), and Street Lights (All Out)
-These are outputs of the "Step0" file in the code folder.  The files are the result of merging the outage data provided by CDOT with Portal data to obtain X and Y coordinates for each outage location
-Only public-use fields are presented in these files
-Data can be found online at the following links for [Alley Lights](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Alley-Lights-Out/t28b-ys7j) [Street Lights - One Out](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Street-Lights-One-Out/3aav-uy2v) and [Street Lights - All Out](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Street-Lights-All-Out/zuxi-7xem)
+Three datasets for outages are provided: Alley Lights, Street Lights (One Out), and Street Lights (All Out). These are outputs of the "Step0" file in the code folder. The files are the result of merging the outage data provided by CDOT with Portal data to obtain X and Y coordinates for each outage location. Only public-use fields are presented in these files. Data can be found online at the following links for [Alley Lights](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Alley-Lights-Out/t28b-ys7j), [Street Lights - One Out](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Street-Lights-One-Out/3aav-uy2v), and [Street Lights - All Out](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Street-Lights-All-Out/zuxi-7xem).
 
-The crimes dataset takes crimes in outdoor locations extracted from the City of Chicago Data Portal at [this link](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2)
-Crimes are extracted for the dates of February 15, 2012 to July 30, 2013.
-Outdoor locations used are: Alley, ATM, Bridge, CHA Lot/Ground, Highway/Expressway, Lakefront/Waterfront/Riverbank, Other, Private School Grounds, Public School Grounds, Residential Driveway, Residential Yard (Front/Back), Sidewalk, Street, Vacanat Lot/Land, and Yard.
+The crimes dataset takes crimes in outdoor locations extracted from the City of Chicago Data Portal at [this link](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2). Crimes are extracted for the dates of February 15, 2012 to July 30, 2013. Outdoor locations used are: Alley, ATM, Bridge, CHA Lot/Ground, Highway/Expressway, Lakefront/Waterfront/Riverbank, Other, Private School Grounds, Public School Grounds, Residential Driveway, Residential Yard (Front/Back), Sidewalk, Street, Vacanat Lot/Land, and Yard.
 
