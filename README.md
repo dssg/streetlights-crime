@@ -9,6 +9,6 @@ This project uses data from the [City of Chicago Data Portal](https://data.cityo
 
 ## The problem
 
-The [Chicago Department of Transportation](http://www.cityofchicago.org/city/en/depts/cdot.html) received reports that some alley and street light outages were purposefully caused.  The department was concerned that individuals may be causing outages with the intent to commit crime in darker areas.  CDOT contacted us to investigate whether there was in fact a relationship between outages and crime around the city.
+The [Chicago Department of Transportation](http://www.cityofchicago.org/city/en/depts/cdot.html) (CDOT) received reports that some alley and street light outages were purposefully caused.  The department was concerned that individuals may be causing outages with the intent to commit crime in darker areas.  CDOT contacted us to investigate whether there was in fact a relationship between outages and crime around the city.
 
 
