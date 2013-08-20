@@ -8,4 +8,4 @@ Step2 is an R file that uses outputs from the Step1 file and estimates differenc
 
 Step3 is an R file that uses outputs from the Step1 file and estimates the average difference in crime rates within outage-affected areas.
 
-Step4 is an R file that uses outputs from the Step3 file and estimates the average difference in crime rates within outage-affected areas by community area.
+Step4 is an R file that uses outputs from the Step3 file and estimates the average difference in robbery rates within alley light outage-affected areas by community area.
