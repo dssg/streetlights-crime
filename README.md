@@ -6,7 +6,7 @@ This a [Data Science for Social Good](http://www.dssg.io) project that estimates
 
 ## The Power of City Data
 
-This project uses data from the [City of Chicago Data Portal](https://data.cityofchicago.org/).  Chicago has been leader in making city data publicly available.  We believe that this data allows for a variety of questions to be studied in a way that they have not been studied before.  Further, as this project demonstrates, the data can be used to study questions that matter and that are important for department planning.
+This project uses data from the [City of Chicago Data Portal](https://data.cityofchicago.org/).  Chicago has been leader in making city data available to the public.  We believe that this data allows for a variety of questions to be studied in a way that they have not been studied before.  Further, as this project demonstrates, the data can be used to study questions that matter and that are important for department planning.
 
 
 ## The Problem: Why Study Outages and Crime?
