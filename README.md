@@ -21,7 +21,7 @@ Our aim is to obtain a causal estimate of the effect of outages on crime.  The f
 
 ## Our Approach: Comparisons within Areas Affected by Outages
 
-We estimate the association between outages and crime by comparing crime rates during outages in the area affected by the outage to crime rates in the same areas immediately before and after the outage.  This method has the strong advantage that each outage-affected area serves as its own control.
+We estimate the association between outages and crime by comparing crime rates during outages in areas affected by the outage to crime rates in the same areas immediately before and after the outage.  This method has the strong advantage that each outage-affected area serves as its own control.
 
 The approach also partially adjusts for variation in crime rates over time by comparing crime rates in time periods close to each other.  However, our best model includes further adjustments for the crime time trend.
 
