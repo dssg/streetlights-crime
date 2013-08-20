@@ -14,6 +14,10 @@ Data can be found online at the following links for [Alley Lights](https://data.
 
 
 
+
+
+
+
 The crimes dataset takes crimes in outdoor locations extracted from the City of Chicago Data Portal at [this link](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2)
 
 Crimes are extracted for the dates of February 15, 2012 to July 30, 2013.
