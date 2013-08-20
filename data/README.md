@@ -1,4 +1,4 @@
-This folder contains the datasets for this project. The four files together are inputs into the "Step1" file in the code folder.
+This folder contains the datasets for this project. The four files together are the inputs into the "Step1" file in the code folder.
 
 Three datasets for outages are provided: Alley Lights, Street Lights (One Out), and Street Lights (All Out). These are outputs of the "Step0" file in the code folder. The files are the result of merging the outage data provided by CDOT with Portal data to obtain X and Y coordinates for each outage location. Only public-use fields are presented in these files. Data can be found online at the following links for [Alley Lights](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Alley-Lights-Out/t28b-ys7j), [Street Lights - One Out](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Street-Lights-One-Out/3aav-uy2v), and [Street Lights - All Out](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Street-Lights-All-Out/zuxi-7xem).
 
