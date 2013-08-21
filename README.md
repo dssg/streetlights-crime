@@ -11,7 +11,7 @@ This project uses data from the [City of Chicago Data Portal](https://data.cityo
 
 ### The Problem: Why Study Outages and Crime?
 
-The [Chicago Department of Transportation](http://www.cityofchicago.org/city/en/depts/cdot.html) (CDOT) received reports that some alley and street light outages were caused purposefully.  The department was concerned that individuals may be causing outages with the intent to commit crime in darker areas.  CDOT contacted us to investigate whether there was in fact a relationship between outages and crime around the city.  CDOT can use the findings to determine if shortening outage durations might decrease crime.  The geographic detail we provide can be used to determine if certain outages should be prioritized in order to reduce crime. 
+The [Chicago Department of Transportation](http://www.cityofchicago.org/city/en/depts/cdot.html) (CDOT) received reports that some alley and street light outages were caused purposefully.  The department was concerned that individuals may be causing outages with the intent to take advantage of darkness to commit crime.  CDOT asked us to investigate whether there was in fact a relationship between outages and crime around the city.  CDOT can use the findings to determine if shortening outage durations might decrease crime.  The geographic detail we provide can be used to determine if certain outages should be prioritized in order to reduce crime. 
 
 
 ### Methodological Challenges: Correlation vs. Causation
@@ -25,7 +25,7 @@ We estimate the association between outages and crime by comparing crime rates d
 
 The approach also partially adjusts for variation in crime rates over time by comparing crime rates in time periods close to each other.  However, our best model includes further adjustments for the crime time trend.
 
-Specifically, we use Poisson Generalized Linear Models, which are useful for studying counts and rates.  Crime rates are modeled as a function of an outage indicators variable, fixed effects for each outage area, and a full set of monthly indicator varaibles to adjust estimates for the crime time trend.
+Specifically, we use Poisson Generalized Linear Models, which are useful for studying counts and rates.  Crime rates are modeled as a function of an outage indicator variable, fixed effects for each outage area, and a full set of monthly indicator variables to adjust estimates for the crime time trend.
 
 
 ### The Project
