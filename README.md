@@ -41,7 +41,9 @@ Please see each folder for further documentation.
 
 ### Questions and Contributing to the Project
 
-Please contact Zach Seeskin at <z-seeskin@u.northwestern.edu>.  
+To get involved, please check the [issue tracker](https://github.com/dssg/streetlights-crime/issues).
+
+Please contact Zach Seeskin at <z-seeskin@u.northwestern.edu> with any comments or questions.  
 
 
 
