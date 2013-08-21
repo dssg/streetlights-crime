@@ -34,7 +34,7 @@ All of our programs are contained in the code folder.  The folder includes Pytho
 
 The following R libraries are needed to run our programs: plyr, doBy, reshape, glmmML.
 
-Tables, charts, and maps are in the results folder.  Our datasets are in the data folder. 
+Various charts used for the project's report are in the results folder.  Our datasets are in the data folder. 
 
 Please see each folder for further documentation.
 
