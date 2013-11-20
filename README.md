@@ -43,14 +43,14 @@ Please see each folder for further documentation.
 You'll need to install python and R. You'll also need the following R libraries: `plyr`, `doBy`, `reshape`, `glmmML`.
 
 
-### Contributing to the project
+## Contributing to the project
 
 To get involved, please check the [issue tracker](https://github.com/dssg/streetlights-crime/issues).
 
 Please contact Zach Seeskin at <z-seeskin@u.northwestern.edu> with any comments or questions.  
 
 
-### License 
+## License 
 
 Copyright (C) 2013 [Data Science for Social Good Fellowship at the University of Chicago](http://dssg.io)
 
