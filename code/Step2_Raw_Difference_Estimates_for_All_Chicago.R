@@ -9,13 +9,13 @@ library(reshape)
 setwd("C:/Users/Zach/Documents/UrbanCCD/Streetlights")
 
 #Open Alley Lights and Crime
-Alley.Lights<- read.csv(file="alessandro_lights_and_crimes_alley.csv", head=TRUE)
+Alley.Lights<- read.csv(file="alley.csv", head=TRUE)
 
 #Open Street Lights One Out and Crime
-Street.Lights.OneOut<- read.csv(file="alessandro_lights_and_crimes_one-out.csv", head=TRUE)
+Street.Lights.OneOut<- read.csv(file="street-one.csv", head=TRUE)
 
 #Open Street Lights All Out and Crime
-Street.Lights.AllOut<- read.csv(file="alessandro_lights_and_crimes_all-out.csv", head=TRUE)
+Street.Lights.AllOut<- read.csv(file="street-all.csv", head=TRUE)
 
 #Change Community Areas to Numeric
 Alley.Lights$community_area <- as.character(Alley.Lights$community_area)
@@ -69,7 +69,7 @@ Summary.Table.Alley[9,1]  <- 30*sum(Alley.Lights$Burglary.Before)         /(30*n
 Summary.Table.Alley[10,1] <- 30*sum(Alley.Lights$Homicide.Before)         /(30*nrow(Alley.Lights))
 Summary.Table.Alley[11,1] <- 30*sum(Alley.Lights$DeceptivePractice.Before)/(30*nrow(Alley.Lights))
 Summary.Table.Alley[1,2]  <- 30*sum(Alley.Lights$Crimes.All.During)       /sum(Alley.Lights$OutageDuration)
-Summary.Table.Alley[2,2]  <- 30*sum(Alley.Lights$Theft.During)           /sum(Alley.Lights$OutageDuration)
+Summary.Table.Alley[2,2]  <- 30*sum(Alley.Lights$Theft.During)            /sum(Alley.Lights$OutageDuration)
 Summary.Table.Alley[3,2]  <- 30*sum(Alley.Lights$Narcotics.During)        /sum(Alley.Lights$OutageDuration)
 Summary.Table.Alley[4,2]  <- 30*sum(Alley.Lights$Battery.During)          /sum(Alley.Lights$OutageDuration)
 Summary.Table.Alley[5,2]  <- 30*sum(Alley.Lights$CriminalDamage.During)   /sum(Alley.Lights$OutageDuration)

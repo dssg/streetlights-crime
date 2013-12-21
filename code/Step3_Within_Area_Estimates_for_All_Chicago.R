@@ -7,16 +7,16 @@ library(reshape)
 library(glmmML)
 
 
-setwd("C:/Users/Zach/Documents/UrbanCCD/Streetlights/FinalCode")
+setwd("C:/Users/Zach/Documents/UrbanCCD/Streetlights")
 
 #Open Alley Lights and Crime
-Alley.Lights<- read.csv(file="alessandro_lights_and_crimes_alley.csv", head=TRUE)
+Alley.Lights<- read.csv(file="alley.csv", head=TRUE)
 
 #Open Street Lights One Out and Crime
-Street.Lights.OneOut<- read.csv(file="alessandro_lights_and_crimes_one-out.csv", head=TRUE)
+Street.Lights.OneOut<- read.csv(file="street-one.csv", head=TRUE)
 
 #Open Street Lights All Out and Crime
-Street.Lights.AllOut<- read.csv(file="alessandro_lights_and_crimes_all-out.csv", head=TRUE)
+Street.Lights.AllOut<- read.csv(file="street-all.csv", head=TRUE)
 
 #Change Community Areas to Numeric
 Alley.Lights$community_area <- as.character(Alley.Lights$community_area)
@@ -587,13 +587,13 @@ Summary.Table.AllOut$star[which(Summary.Table.AllOut$p.value<0.05 & Summary.Tabl
 
 ## Seasonality Specifications - Based on Midpoint of Period
 Alley.Lights.Pois$Month <- numeric(nrow(Alley.Lights.Pois))
-Alley.Lights.Pois$Month[which(Alley.Lights.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCreated, "%m/%d/%Y")-22,6,7))[which(Alley.Lights.Pois$Time=="BEFORE")] 
-Alley.Lights.Pois$Month[which(Alley.Lights.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCreated, "%m/%d/%Y")+round(Alley.Lights.Pois$Duration/2,0),6,7))[which(Alley.Lights.Pois$Time=="DURING")] 
-Alley.Lights.Pois$Month[which(Alley.Lights.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCompleted, "%m/%d/%Y")+7+round(Alley.Lights.Pois$Duration/2,0),6,7))[which(Alley.Lights.Pois$Time=="AFTER")] 
+Alley.Lights.Pois$Month[which(Alley.Lights.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCreated, "%Y-%m-%d")-22,6,7))[which(Alley.Lights.Pois$Time=="BEFORE")] 
+Alley.Lights.Pois$Month[which(Alley.Lights.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCreated, "%Y-%m-%d")+round(Alley.Lights.Pois$Duration/2,0),6,7))[which(Alley.Lights.Pois$Time=="DURING")] 
+Alley.Lights.Pois$Month[which(Alley.Lights.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCompleted, "%Y-%m-%d")+7+round(Alley.Lights.Pois$Duration/2,0),6,7))[which(Alley.Lights.Pois$Time=="AFTER")] 
 Alley.Lights.Pois$Year <- numeric(nrow(Alley.Lights.Pois))
-Alley.Lights.Pois$Year[which(Alley.Lights.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCreated, "%m/%d/%Y")-22,3,4))[which(Alley.Lights.Pois$Time=="BEFORE")]  
-Alley.Lights.Pois$Year[which(Alley.Lights.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCreated, "%m/%d/%Y")+round(Alley.Lights.Pois$Duration/2,0),3,4))[which(Alley.Lights.Pois$Time=="DURING")] 
-Alley.Lights.Pois$Year[which(Alley.Lights.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCompleted, "%m/%d/%Y")+7+round(Alley.Lights.Pois$Duration/2,0),3,4))[which(Alley.Lights.Pois$Time=="AFTER")] 
+Alley.Lights.Pois$Year[which(Alley.Lights.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCreated, "%Y-%m-%d")-22,3,4))[which(Alley.Lights.Pois$Time=="BEFORE")]  
+Alley.Lights.Pois$Year[which(Alley.Lights.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCreated, "%Y-%m-%d")+round(Alley.Lights.Pois$Duration/2,0),3,4))[which(Alley.Lights.Pois$Time=="DURING")] 
+Alley.Lights.Pois$Year[which(Alley.Lights.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Alley.Lights.Pois$DateCompleted, "%Y-%m-%d")+7+round(Alley.Lights.Pois$Duration/2,0),3,4))[which(Alley.Lights.Pois$Time=="AFTER")] 
 
 Alley.Lights.Pois$Mar12 <- as.numeric(Alley.Lights.Pois$Month==3)  * as.numeric(Alley.Lights.Pois$Year==12)
 Alley.Lights.Pois$Apr12 <- as.numeric(Alley.Lights.Pois$Month==4)  * as.numeric(Alley.Lights.Pois$Year==12)
@@ -614,78 +614,79 @@ Alley.Lights.Pois$Jun13 <- as.numeric(Alley.Lights.Pois$Month==6)  * as.numeric(
 Alley.Lights.Pois$Jul13 <- as.numeric(Alley.Lights.Pois$Month==7)  * as.numeric(Alley.Lights.Pois$Year==13) 
 
 Fit.Alley.AllCrimes.Seas         <- glmmboot(AllCrimes         ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
-Fit.Alley.Theft.Seas             <- glmmboot(Theft             ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
+#Fit.Alley.Theft.Seas             <- glmmboot(Theft             ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
 Fit.Alley.Narcotics.Seas         <- glmmboot(Narcotics         ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
 Fit.Alley.Battery.Seas           <- glmmboot(Battery           ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
 Fit.Alley.CriminalDamage.Seas    <- glmmboot(CriminalDamage    ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
-Fit.Alley.MotorVehicleTheft.Seas <- glmmboot(MotorVehicleTheft ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
+#Fit.Alley.MotorVehicleTheft.Seas <- glmmboot(MotorVehicleTheft ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
 Fit.Alley.Robbery.Seas           <- glmmboot(Robbery           ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
 Fit.Alley.Assault.Seas           <- glmmboot(Assault           ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
-Fit.Alley.Burglary.Seas          <- glmmboot(Burglary          ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
-Fit.Alley.Homicide.Seas          <- glmmboot(Homicide          ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
-Fit.Alley.DeceptivePractice.Seas <- glmmboot(DeceptivePractice ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
+#Fit.Alley.Burglary.Seas          <- glmmboot(Burglary          ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
+#Fit.Alley.Homicide.Seas          <- glmmboot(Homicide          ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
+#Fit.Alley.DeceptivePractice.Seas <- glmmboot(DeceptivePractice ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Alley.Lights.Pois)
 Summary.Table.Alley$PctDiff.Seas <- numeric(nrow(Summary.Table.Alley))
 Summary.Table.Alley$LL.Seas <- numeric(nrow(Summary.Table.Alley))
 Summary.Table.Alley$UL.Seas <- numeric(nrow(Summary.Table.Alley))
 Summary.Table.Alley$p.value.Seas <- numeric(nrow(Summary.Table.Alley))
 Summary.Table.Alley$star.Seas <- character(nrow(Summary.Table.Alley))
 Summary.Table.Alley$PctDiff.Seas[1] <- 100*exp(Fit.Alley.AllCrimes.Seas$coef[1])-100
-Summary.Table.Alley$PctDiff.Seas[2] <- 100*exp(Fit.Alley.Theft.Seas$coef[1])-100
+#Summary.Table.Alley$PctDiff.Seas[2] <- 100*exp(Fit.Alley.Theft.Seas$coef[1])-100
 Summary.Table.Alley$PctDiff.Seas[3] <- 100*exp(Fit.Alley.Narcotics.Seas$coef[1])-100
 Summary.Table.Alley$PctDiff.Seas[4] <- 100*exp(Fit.Alley.Battery.Seas$coef[1])-100
 Summary.Table.Alley$PctDiff.Seas[5] <- 100*exp(Fit.Alley.CriminalDamage.Seas$coef[1])-100
-Summary.Table.Alley$PctDiff.Seas[6] <- 100*exp(Fit.Alley.MotorVehicleTheft.Seas$coef[1])-100
+#Summary.Table.Alley$PctDiff.Seas[6] <- 100*exp(Fit.Alley.MotorVehicleTheft.Seas$coef[1])-100
 Summary.Table.Alley$PctDiff.Seas[7] <- 100*exp(Fit.Alley.Robbery.Seas$coef[1])-100
 Summary.Table.Alley$PctDiff.Seas[8] <- 100*exp(Fit.Alley.Assault.Seas$coef[1])-100
-Summary.Table.Alley$PctDiff.Seas[9] <- 100*exp(Fit.Alley.Burglary.Seas$coef[1])-100
-Summary.Table.Alley$PctDiff.Seas[10] <- 100*exp(Fit.Alley.Homicide.Seas$coef[1])-100
-Summary.Table.Alley$PctDiff.Seas[11] <- 100*exp(Fit.Alley.DeceptivePractice.Seas$coef[1])-100
+#Summary.Table.Alley$PctDiff.Seas[9] <- 100*exp(Fit.Alley.Burglary.Seas$coef[1])-100
+#Summary.Table.Alley$PctDiff.Seas[10] <- 100*exp(Fit.Alley.Homicide.Seas$coef[1])-100
+#Summary.Table.Alley$PctDiff.Seas[11] <- 100*exp(Fit.Alley.DeceptivePractice.Seas$coef[1])-100
 Summary.Table.Alley$p.value.Seas[1]  <- 2*pt(-abs(Fit.Alley.AllCrimes.Seas$coef[1]/Fit.Alley.AllCrimes.Seas$sd[1]),df=length(Fit.Alley.AllCrimes.Seas$pred-1))
-Summary.Table.Alley$p.value.Seas[2]  <- 2*pt(-abs(Fit.Alley.Theft.Seas$coef[1]/Fit.Alley.Theft.Seas$sd[1]),df=length(Fit.Alley.Theft.Seas$pred-1))
+#Summary.Table.Alley$p.value.Seas[2]  <- 2*pt(-abs(Fit.Alley.Theft.Seas$coef[1]/Fit.Alley.Theft.Seas$sd[1]),df=length(Fit.Alley.Theft.Seas$pred-1))
 Summary.Table.Alley$p.value.Seas[3]  <- 2*pt(-abs(Fit.Alley.Narcotics.Seas$coef[1]/Fit.Alley.Narcotics.Seas$sd[1]),df=length(Fit.Alley.Narcotics.Seas$pred-1))
 Summary.Table.Alley$p.value.Seas[4]  <- 2*pt(-abs(Fit.Alley.Battery.Seas$coef[1]/Fit.Alley.Battery.Seas$sd[1]),df=length(Fit.Alley.Battery.Seas$pred-1))
 Summary.Table.Alley$p.value.Seas[5]  <- 2*pt(-abs(Fit.Alley.CriminalDamage.Seas$coef[1]/Fit.Alley.CriminalDamage.Seas$sd[1]),df=length(Fit.Alley.CriminalDamage.Seas$pred-1))
-Summary.Table.Alley$p.value.Seas[6]  <- 2*pt(-abs(Fit.Alley.MotorVehicleTheft.Seas$coef[1]/Fit.Alley.MotorVehicleTheft.Seas$sd[1]),df=length(Fit.Alley.MotorVehicleTheft.Seas$pred-1))
+#Summary.Table.Alley$p.value.Seas[6]  <- 2*pt(-abs(Fit.Alley.MotorVehicleTheft.Seas$coef[1]/Fit.Alley.MotorVehicleTheft.Seas$sd[1]),df=length(Fit.Alley.MotorVehicleTheft.Seas$pred-1))
 Summary.Table.Alley$p.value.Seas[7]  <- 2*pt(-abs(Fit.Alley.Robbery.Seas$coef[1]/Fit.Alley.Robbery.Seas$sd[1]),df=length(Fit.Alley.Robbery.Seas$pred-1))
 Summary.Table.Alley$p.value.Seas[8]  <- 2*pt(-abs(Fit.Alley.Assault.Seas$coef[1]/Fit.Alley.Assault.Seas$sd[1]),df=length(Fit.Alley.Assault.Seas$pred-1))
-Summary.Table.Alley$p.value.Seas[9]  <- 2*pt(-abs(Fit.Alley.Burglary.Seas$coef[1]/Fit.Alley.Burglary.Seas$sd[1]),df=length(Fit.Alley.Burglary.Seas$pred-1))
-Summary.Table.Alley$p.value.Seas[10] <- 2*pt(-abs(Fit.Alley.Homicide.Seas$coef[1]/Fit.Alley.Homicide.Seas$sd[1]),df=length(Fit.Alley.Homicide.Seas$pred-1))
-Summary.Table.Alley$p.value.Seas[11] <- 2*pt(-abs(Fit.Alley.DeceptivePractice.Seas$coef[1]/Fit.Alley.DeceptivePractice.Seas$sd[1]),df=length(Fit.Alley.DeceptivePractice.Seas$pred-1))
+#Summary.Table.Alley$p.value.Seas[9]  <- 2*pt(-abs(Fit.Alley.Burglary.Seas$coef[1]/Fit.Alley.Burglary.Seas$sd[1]),df=length(Fit.Alley.Burglary.Seas$pred-1))
+#Summary.Table.Alley$p.value.Seas[10] <- 2*pt(-abs(Fit.Alley.Homicide.Seas$coef[1]/Fit.Alley.Homicide.Seas$sd[1]),df=length(Fit.Alley.Homicide.Seas$pred-1))
+#Summary.Table.Alley$p.value.Seas[11] <- 2*pt(-abs(Fit.Alley.DeceptivePractice.Seas$coef[1]/Fit.Alley.DeceptivePractice.Seas$sd[1]),df=length(Fit.Alley.DeceptivePractice.Seas$pred-1))
 Summary.Table.Alley$LL.Seas[1]  <- 100*exp(Fit.Alley.AllCrimes.Seas$coef[1]         - qt(.975, length(Fit.Alley.AllCrimes.Seas$pred-1))        *Fit.Alley.AllCrimes.Seas$sd[1])        -100
-Summary.Table.Alley$LL.Seas[2]  <- 100*exp(Fit.Alley.Theft.Seas$coef[1]             - qt(.975, length(Fit.Alley.Theft.Seas$pred-1))            *Fit.Alley.Theft.Seas$sd[1])           -100
+#Summary.Table.Alley$LL.Seas[2]  <- 100*exp(Fit.Alley.Theft.Seas$coef[1]             - qt(.975, length(Fit.Alley.Theft.Seas$pred-1))            *Fit.Alley.Theft.Seas$sd[1])           -100
 Summary.Table.Alley$LL.Seas[3]  <- 100*exp(Fit.Alley.Narcotics.Seas$coef[1]         - qt(.975, length(Fit.Alley.Narcotics.Seas$pred-1))        *Fit.Alley.Narcotics.Seas$sd[1])        -100
 Summary.Table.Alley$LL.Seas[4]  <- 100*exp(Fit.Alley.Battery.Seas$coef[1]           - qt(.975, length(Fit.Alley.Battery.Seas$pred-1))          *Fit.Alley.Battery.Seas$sd[1])          -100
 Summary.Table.Alley$LL.Seas[5]  <- 100*exp(Fit.Alley.CriminalDamage.Seas$coef[1]    - qt(.975, length(Fit.Alley.CriminalDamage.Seas$pred-1))   *Fit.Alley.CriminalDamage.Seas$sd[1])   -100
-Summary.Table.Alley$LL.Seas[6]  <- 100*exp(Fit.Alley.MotorVehicleTheft.Seas$coef[1] - qt(.975, length(Fit.Alley.MotorVehicleTheft.Seas$pred-1))*Fit.Alley.MotorVehicleTheft.Seas$sd[1])-100
+#Summary.Table.Alley$LL.Seas[6]  <- 100*exp(Fit.Alley.MotorVehicleTheft.Seas$coef[1] - qt(.975, length(Fit.Alley.MotorVehicleTheft.Seas$pred-1))*Fit.Alley.MotorVehicleTheft.Seas$sd[1])-100
 Summary.Table.Alley$LL.Seas[7]  <- 100*exp(Fit.Alley.Robbery.Seas$coef[1]           - qt(.975, length(Fit.Alley.Robbery.Seas$pred-1))          *Fit.Alley.Robbery.Seas$sd[1])          -100
 Summary.Table.Alley$LL.Seas[8]  <- 100*exp(Fit.Alley.Assault.Seas$coef[1]           - qt(.975, length(Fit.Alley.Assault.Seas$pred-1))          *Fit.Alley.Assault.Seas$sd[1])          -100
-Summary.Table.Alley$LL.Seas[9]  <- 100*exp(Fit.Alley.Burglary.Seas$coef[1]          - qt(.975, length(Fit.Alley.Burglary.Seas$pred-1))         *Fit.Alley.Burglary.Seas$sd[1])         -100
-Summary.Table.Alley$LL.Seas[10] <- 100*exp(Fit.Alley.Homicide.Seas$coef[1]          - qt(.975, length(Fit.Alley.Homicide.Seas$pred-1))         *Fit.Alley.Homicide.Seas$sd[1])         -100
-Summary.Table.Alley$LL.Seas[11] <- 100*exp(Fit.Alley.DeceptivePractice.Seas$coef[1] - qt(.975, length(Fit.Alley.DeceptivePractice.Seas$pred-1))*Fit.Alley.DeceptivePractice.Seas$sd[1])-100
+#Summary.Table.Alley$LL.Seas[9]  <- 100*exp(Fit.Alley.Burglary.Seas$coef[1]          - qt(.975, length(Fit.Alley.Burglary.Seas$pred-1))         *Fit.Alley.Burglary.Seas$sd[1])         -100
+#Summary.Table.Alley$LL.Seas[10] <- 100*exp(Fit.Alley.Homicide.Seas$coef[1]          - qt(.975, length(Fit.Alley.Homicide.Seas$pred-1))         *Fit.Alley.Homicide.Seas$sd[1])         -100
+#Summary.Table.Alley$LL.Seas[11] <- 100*exp(Fit.Alley.DeceptivePractice.Seas$coef[1] - qt(.975, length(Fit.Alley.DeceptivePractice.Seas$pred-1))*Fit.Alley.DeceptivePractice.Seas$sd[1])-100
 Summary.Table.Alley$UL.Seas[1]  <- 100*exp(Fit.Alley.AllCrimes.Seas$coef[1]         + qt(.975, length(Fit.Alley.AllCrimes.Seas$pred-1))        *Fit.Alley.AllCrimes.Seas$sd[1])        -100
-Summary.Table.Alley$UL.Seas[2]  <- 100*exp(Fit.Alley.Theft.Seas$coef[1]             + qt(.975, length(Fit.Alley.Theft.Seas$pred-1))            *Fit.Alley.Theft.Seas$sd[1])           -100
+#Summary.Table.Alley$UL.Seas[2]  <- 100*exp(Fit.Alley.Theft.Seas$coef[1]             + qt(.975, length(Fit.Alley.Theft.Seas$pred-1))            *Fit.Alley.Theft.Seas$sd[1])           -100
 Summary.Table.Alley$UL.Seas[3]  <- 100*exp(Fit.Alley.Narcotics.Seas$coef[1]         + qt(.975, length(Fit.Alley.Narcotics.Seas$pred-1))        *Fit.Alley.Narcotics.Seas$sd[1])        -100
 Summary.Table.Alley$UL.Seas[4]  <- 100*exp(Fit.Alley.Battery.Seas$coef[1]           + qt(.975, length(Fit.Alley.Battery.Seas$pred-1))          *Fit.Alley.Battery.Seas$sd[1])          -100
 Summary.Table.Alley$UL.Seas[5]  <- 100*exp(Fit.Alley.CriminalDamage.Seas$coef[1]    + qt(.975, length(Fit.Alley.CriminalDamage.Seas$pred-1))   *Fit.Alley.CriminalDamage.Seas$sd[1])   -100
-Summary.Table.Alley$UL.Seas[6]  <- 100*exp(Fit.Alley.MotorVehicleTheft.Seas$coef[1] + qt(.975, length(Fit.Alley.MotorVehicleTheft.Seas$pred-1))*Fit.Alley.MotorVehicleTheft.Seas$sd[1])-100
+#Summary.Table.Alley$UL.Seas[6]  <- 100*exp(Fit.Alley.MotorVehicleTheft.Seas$coef[1] + qt(.975, length(Fit.Alley.MotorVehicleTheft.Seas$pred-1))*Fit.Alley.MotorVehicleTheft.Seas$sd[1])-100
 Summary.Table.Alley$UL.Seas[7]  <- 100*exp(Fit.Alley.Robbery.Seas$coef[1]           + qt(.975, length(Fit.Alley.Robbery.Seas$pred-1))          *Fit.Alley.Robbery.Seas$sd[1])          -100
 Summary.Table.Alley$UL.Seas[8]  <- 100*exp(Fit.Alley.Assault.Seas$coef[1]           + qt(.975, length(Fit.Alley.Assault.Seas$pred-1))          *Fit.Alley.Assault.Seas$sd[1])          -100
-Summary.Table.Alley$UL.Seas[9]  <- 100*exp(Fit.Alley.Burglary.Seas$coef[1]          + qt(.975, length(Fit.Alley.Burglary.Seas$pred-1))         *Fit.Alley.Burglary.Seas$sd[1])         -100
-Summary.Table.Alley$UL.Seas[10] <- 100*exp(Fit.Alley.Homicide.Seas$coef[1]          + qt(.975, length(Fit.Alley.Homicide.Seas$pred-1))         *Fit.Alley.Homicide.Seas$sd[1])         -100
-Summary.Table.Alley$UL.Seas[11] <- 100*exp(Fit.Alley.DeceptivePractice.Seas$coef[1] + qt(.975, length(Fit.Alley.DeceptivePractice.Seas$pred-1))*Fit.Alley.DeceptivePractice.Seas$sd[1])-100
+#Summary.Table.Alley$UL.Seas[9]  <- 100*exp(Fit.Alley.Burglary.Seas$coef[1]          + qt(.975, length(Fit.Alley.Burglary.Seas$pred-1))         *Fit.Alley.Burglary.Seas$sd[1])         -100
+#Summary.Table.Alley$UL.Seas[10] <- 100*exp(Fit.Alley.Homicide.Seas$coef[1]          + qt(.975, length(Fit.Alley.Homicide.Seas$pred-1))         *Fit.Alley.Homicide.Seas$sd[1])         -100
+#Summary.Table.Alley$UL.Seas[11] <- 100*exp(Fit.Alley.DeceptivePractice.Seas$coef[1] + qt(.975, length(Fit.Alley.DeceptivePractice.Seas$pred-1))*Fit.Alley.DeceptivePractice.Seas$sd[1])-100
+round(Summary.Table.Alley, 3)
 Summary.Table.Alley$star.Seas[which(Summary.Table.Alley$p.value.Seas<0.01)]                                           <- rep("**", length(which(Summary.Table.Alley$p.value.Seas<0.01)))
 Summary.Table.Alley$star.Seas[which(Summary.Table.Alley$p.value.Seas<0.05 & Summary.Table.Alley$p.value.Seas>=0.01)] <- rep("*" , length(which(Summary.Table.Alley$p.value.Seas<0.05 & Summary.Table.Alley$p.value.Seas>=0.01)))
 
 
 
 Street.Lights.OneOut.Pois$Month <- numeric(nrow(Street.Lights.OneOut.Pois))
-Street.Lights.OneOut.Pois$Month[which(Street.Lights.OneOut.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCreated, "%m/%d/%Y")-22,6,7))[which(Street.Lights.OneOut.Pois$Time=="BEFORE")] 
-Street.Lights.OneOut.Pois$Month[which(Street.Lights.OneOut.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCreated, "%m/%d/%Y")+round(Street.Lights.OneOut.Pois$Duration/2,0),6,7))[which(Street.Lights.OneOut.Pois$Time=="DURING")] 
-Street.Lights.OneOut.Pois$Month[which(Street.Lights.OneOut.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCompleted, "%m/%d/%Y")+7+round(Street.Lights.OneOut.Pois$Duration/2,0),6,7))[which(Street.Lights.OneOut.Pois$Time=="AFTER")] 
+Street.Lights.OneOut.Pois$Month[which(Street.Lights.OneOut.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCreated, "%Y-%m-%d")-22,6,7))[which(Street.Lights.OneOut.Pois$Time=="BEFORE")] 
+Street.Lights.OneOut.Pois$Month[which(Street.Lights.OneOut.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCreated, "%Y-%m-%d")+round(Street.Lights.OneOut.Pois$Duration/2,0),6,7))[which(Street.Lights.OneOut.Pois$Time=="DURING")] 
+Street.Lights.OneOut.Pois$Month[which(Street.Lights.OneOut.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCompleted, "%Y-%m-%d")+7+round(Street.Lights.OneOut.Pois$Duration/2,0),6,7))[which(Street.Lights.OneOut.Pois$Time=="AFTER")] 
 Street.Lights.OneOut.Pois$Year <- numeric(nrow(Street.Lights.OneOut.Pois))
-Street.Lights.OneOut.Pois$Year[which(Street.Lights.OneOut.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCreated, "%m/%d/%Y")-22,3,4))[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]  
-Street.Lights.OneOut.Pois$Year[which(Street.Lights.OneOut.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCreated, "%m/%d/%Y")+round(Street.Lights.OneOut.Pois$Duration/2,0),3,4))[which(Street.Lights.OneOut.Pois$Time=="DURING")] 
-Street.Lights.OneOut.Pois$Year[which(Street.Lights.OneOut.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCompleted, "%m/%d/%Y")+7+round(Street.Lights.OneOut.Pois$Duration/2,0),3,4))[which(Street.Lights.OneOut.Pois$Time=="AFTER")] 
+Street.Lights.OneOut.Pois$Year[which(Street.Lights.OneOut.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCreated, "%Y-%m-%d")-22,3,4))[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]  
+Street.Lights.OneOut.Pois$Year[which(Street.Lights.OneOut.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCreated, "%Y-%m-%d")+round(Street.Lights.OneOut.Pois$Duration/2,0),3,4))[which(Street.Lights.OneOut.Pois$Time=="DURING")] 
+Street.Lights.OneOut.Pois$Year[which(Street.Lights.OneOut.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Street.Lights.OneOut.Pois$DateCompleted, "%Y-%m-%d")+7+round(Street.Lights.OneOut.Pois$Duration/2,0),3,4))[which(Street.Lights.OneOut.Pois$Time=="AFTER")] 
 
 Street.Lights.OneOut.Pois$Mar12 <- as.numeric(Street.Lights.OneOut.Pois$Month==3)  * as.numeric(Street.Lights.OneOut.Pois$Year==12)
 Street.Lights.OneOut.Pois$Apr12 <- as.numeric(Street.Lights.OneOut.Pois$Month==4)  * as.numeric(Street.Lights.OneOut.Pois$Year==12)
@@ -714,7 +715,7 @@ Fit.OneOut.MotorVehicleTheft.Seas <- glmmboot(MotorVehicleTheft ~ offset(log(Dur
 Fit.OneOut.Robbery.Seas           <- glmmboot(Robbery           ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
 Fit.OneOut.Assault.Seas           <- glmmboot(Assault           ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
 Fit.OneOut.Burglary.Seas          <- glmmboot(Burglary          ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
-Fit.OneOut.Homicide.Seas          <- glmmboot(Homicide          ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+#Fit.OneOut.Homicide.Seas          <- glmmboot(Homicide          ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
 Fit.OneOut.DeceptivePractice.Seas <- glmmboot(DeceptivePractice ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
 Summary.Table.OneOut$PctDiff.Seas <- numeric(nrow(Summary.Table.OneOut))
 Summary.Table.OneOut$LL.Seas <- numeric(nrow(Summary.Table.OneOut))
@@ -730,7 +731,7 @@ Summary.Table.OneOut$PctDiff.Seas[6] <- 100*exp(Fit.OneOut.MotorVehicleTheft.Sea
 Summary.Table.OneOut$PctDiff.Seas[7] <- 100*exp(Fit.OneOut.Robbery.Seas$coef[1])-100
 Summary.Table.OneOut$PctDiff.Seas[8] <- 100*exp(Fit.OneOut.Assault.Seas$coef[1])-100
 Summary.Table.OneOut$PctDiff.Seas[9] <- 100*exp(Fit.OneOut.Burglary.Seas$coef[1])-100
-Summary.Table.OneOut$PctDiff.Seas[10] <- 100*exp(Fit.OneOut.Homicide.Seas$coef[1])-100
+#Summary.Table.OneOut$PctDiff.Seas[10] <- 100*exp(Fit.OneOut.Homicide.Seas$coef[1])-100
 Summary.Table.OneOut$PctDiff.Seas[11] <- 100*exp(Fit.OneOut.DeceptivePractice.Seas$coef[1])-100
 Summary.Table.OneOut$p.value.Seas[1]  <- 2*pt(-abs(Fit.OneOut.AllCrimes.Seas$coef[1]/Fit.OneOut.AllCrimes.Seas$sd[1]),df=length(Fit.OneOut.AllCrimes.Seas$pred-1))
 Summary.Table.OneOut$p.value.Seas[2]  <- 2*pt(-abs(Fit.OneOut.Theft.Seas$coef[1]/Fit.OneOut.Theft.Seas$sd[1]),df=length(Fit.OneOut.Theft.Seas$pred-1))
@@ -741,7 +742,7 @@ Summary.Table.OneOut$p.value.Seas[6]  <- 2*pt(-abs(Fit.OneOut.MotorVehicleTheft.
 Summary.Table.OneOut$p.value.Seas[7]  <- 2*pt(-abs(Fit.OneOut.Robbery.Seas$coef[1]/Fit.OneOut.Robbery.Seas$sd[1]),df=length(Fit.OneOut.Robbery.Seas$pred-1))
 Summary.Table.OneOut$p.value.Seas[8]  <- 2*pt(-abs(Fit.OneOut.Assault.Seas$coef[1]/Fit.OneOut.Assault.Seas$sd[1]),df=length(Fit.OneOut.Assault.Seas$pred-1))
 Summary.Table.OneOut$p.value.Seas[9]  <- 2*pt(-abs(Fit.OneOut.Burglary.Seas$coef[1]/Fit.OneOut.Burglary.Seas$sd[1]),df=length(Fit.OneOut.Burglary.Seas$pred-1))
-Summary.Table.OneOut$p.value.Seas[10] <- 2*pt(-abs(Fit.OneOut.Homicide.Seas$coef[1]/Fit.OneOut.Homicide.Seas$sd[1]),df=length(Fit.OneOut.Homicide.Seas$pred-1))
+#Summary.Table.OneOut$p.value.Seas[10] <- 2*pt(-abs(Fit.OneOut.Homicide.Seas$coef[1]/Fit.OneOut.Homicide.Seas$sd[1]),df=length(Fit.OneOut.Homicide.Seas$pred-1))
 Summary.Table.OneOut$p.value.Seas[11] <- 2*pt(-abs(Fit.OneOut.DeceptivePractice.Seas$coef[1]/Fit.OneOut.DeceptivePractice.Seas$sd[1]),df=length(Fit.OneOut.DeceptivePractice.Seas$pred-1))
 Summary.Table.OneOut$LL.Seas[1]  <- 100*exp(Fit.OneOut.AllCrimes.Seas$coef[1]         - qt(.975, length(Fit.OneOut.AllCrimes.Seas$pred-1))        *Fit.OneOut.AllCrimes.Seas$sd[1])        -100
 Summary.Table.OneOut$LL.Seas[2]  <- 100*exp(Fit.OneOut.Theft.Seas$coef[1]             - qt(.975, length(Fit.OneOut.Theft.Seas$pred-1))            *Fit.OneOut.Theft.Seas$sd[1])            -100
@@ -752,7 +753,7 @@ Summary.Table.OneOut$LL.Seas[6]  <- 100*exp(Fit.OneOut.MotorVehicleTheft.Seas$co
 Summary.Table.OneOut$LL.Seas[7]  <- 100*exp(Fit.OneOut.Robbery.Seas$coef[1]           - qt(.975, length(Fit.OneOut.Robbery.Seas$pred-1))          *Fit.OneOut.Robbery.Seas$sd[1])          -100
 Summary.Table.OneOut$LL.Seas[8]  <- 100*exp(Fit.OneOut.Assault.Seas$coef[1]           - qt(.975, length(Fit.OneOut.Assault.Seas$pred-1))          *Fit.OneOut.Assault.Seas$sd[1])          -100
 Summary.Table.OneOut$LL.Seas[9]  <- 100*exp(Fit.OneOut.Burglary.Seas$coef[1]          - qt(.975, length(Fit.OneOut.Burglary.Seas$pred-1))         *Fit.OneOut.Burglary.Seas$sd[1])         -100
-Summary.Table.OneOut$LL.Seas[10] <- 100*exp(Fit.OneOut.Homicide.Seas$coef[1]          - qt(.975, length(Fit.OneOut.Homicide.Seas$pred-1))         *Fit.OneOut.Homicide.Seas$sd[1])         -100
+#Summary.Table.OneOut$LL.Seas[10] <- 100*exp(Fit.OneOut.Homicide.Seas$coef[1]          - qt(.975, length(Fit.OneOut.Homicide.Seas$pred-1))         *Fit.OneOut.Homicide.Seas$sd[1])         -100
 Summary.Table.OneOut$LL.Seas[11] <- 100*exp(Fit.OneOut.DeceptivePractice.Seas$coef[1] - qt(.975, length(Fit.OneOut.DeceptivePractice.Seas$pred-1))*Fit.OneOut.DeceptivePractice.Seas$sd[1])-100
 Summary.Table.OneOut$UL.Seas[1]  <- 100*exp(Fit.OneOut.AllCrimes.Seas$coef[1]         + qt(.975, length(Fit.OneOut.AllCrimes.Seas$pred-1))        *Fit.OneOut.AllCrimes.Seas$sd[1])        -100
 Summary.Table.OneOut$UL.Seas[2]  <- 100*exp(Fit.OneOut.Theft.Seas$coef[1]             + qt(.975, length(Fit.OneOut.Theft.Seas$pred-1))            *Fit.OneOut.Theft.Seas$sd[1])            -100
@@ -763,7 +764,7 @@ Summary.Table.OneOut$UL.Seas[6]  <- 100*exp(Fit.OneOut.MotorVehicleTheft.Seas$co
 Summary.Table.OneOut$UL.Seas[7]  <- 100*exp(Fit.OneOut.Robbery.Seas$coef[1]           + qt(.975, length(Fit.OneOut.Robbery.Seas$pred-1))          *Fit.OneOut.Robbery.Seas$sd[1])          -100
 Summary.Table.OneOut$UL.Seas[8]  <- 100*exp(Fit.OneOut.Assault.Seas$coef[1]           + qt(.975, length(Fit.OneOut.Assault.Seas$pred-1))          *Fit.OneOut.Assault.Seas$sd[1])          -100
 Summary.Table.OneOut$UL.Seas[9]  <- 100*exp(Fit.OneOut.Burglary.Seas$coef[1]          + qt(.975, length(Fit.OneOut.Burglary.Seas$pred-1))         *Fit.OneOut.Burglary.Seas$sd[1])         -100
-Summary.Table.OneOut$UL.Seas[10] <- 100*exp(Fit.OneOut.Homicide.Seas$coef[1]          + qt(.975, length(Fit.OneOut.Homicide.Seas$pred-1))         *Fit.OneOut.Homicide.Seas$sd[1])         -100
+#Summary.Table.OneOut$UL.Seas[10] <- 100*exp(Fit.OneOut.Homicide.Seas$coef[1]          + qt(.975, length(Fit.OneOut.Homicide.Seas$pred-1))         *Fit.OneOut.Homicide.Seas$sd[1])         -100
 Summary.Table.OneOut$UL.Seas[11] <- 100*exp(Fit.OneOut.DeceptivePractice.Seas$coef[1] + qt(.975, length(Fit.OneOut.DeceptivePractice.Seas$pred-1))*Fit.OneOut.DeceptivePractice.Seas$sd[1])-100
 Summary.Table.OneOut$star.Seas[which(Summary.Table.OneOut$p.value.Seas<0.01)]                                           <- rep("**", length(which(Summary.Table.OneOut$p.value.Seas<0.01)))
 Summary.Table.OneOut$star.Seas[which(Summary.Table.OneOut$p.value.Seas<0.05 & Summary.Table.OneOut$p.value.Seas>=0.01)] <- rep("*" , length(which(Summary.Table.OneOut$p.value.Seas<0.05 & Summary.Table.OneOut$p.value.Seas>=0.01)))
@@ -771,13 +772,13 @@ Summary.Table.OneOut$star.Seas[which(Summary.Table.OneOut$p.value.Seas<0.05 & Su
 
 
 Street.Lights.AllOut.Pois$Month <- numeric(nrow(Street.Lights.AllOut.Pois))
-Street.Lights.AllOut.Pois$Month[which(Street.Lights.AllOut.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCreated, "%m/%d/%Y")-22,6,7))[which(Street.Lights.AllOut.Pois$Time=="BEFORE")] 
-Street.Lights.AllOut.Pois$Month[which(Street.Lights.AllOut.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCreated, "%m/%d/%Y")+round(Street.Lights.AllOut.Pois$Duration/2,0),6,7))[which(Street.Lights.AllOut.Pois$Time=="DURING")] 
-Street.Lights.AllOut.Pois$Month[which(Street.Lights.AllOut.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCompleted, "%m/%d/%Y")+7+round(Street.Lights.AllOut.Pois$Duration/2,0),6,7))[which(Street.Lights.AllOut.Pois$Time=="AFTER")] 
+Street.Lights.AllOut.Pois$Month[which(Street.Lights.AllOut.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCreated, "%Y-%m-%d")-22,6,7))[which(Street.Lights.AllOut.Pois$Time=="BEFORE")] 
+Street.Lights.AllOut.Pois$Month[which(Street.Lights.AllOut.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCreated, "%Y-%m-%d")+round(Street.Lights.AllOut.Pois$Duration/2,0),6,7))[which(Street.Lights.AllOut.Pois$Time=="DURING")] 
+Street.Lights.AllOut.Pois$Month[which(Street.Lights.AllOut.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCompleted, "%Y-%m-%d")+7+round(Street.Lights.AllOut.Pois$Duration/2,0),6,7))[which(Street.Lights.AllOut.Pois$Time=="AFTER")] 
 Street.Lights.AllOut.Pois$Year <- numeric(nrow(Street.Lights.AllOut.Pois))
-Street.Lights.AllOut.Pois$Year[which(Street.Lights.AllOut.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCreated, "%m/%d/%Y")-22,3,4))[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]  
-Street.Lights.AllOut.Pois$Year[which(Street.Lights.AllOut.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCreated, "%m/%d/%Y")+round(Street.Lights.AllOut.Pois$Duration/2,0),3,4))[which(Street.Lights.AllOut.Pois$Time=="DURING")] 
-Street.Lights.AllOut.Pois$Year[which(Street.Lights.AllOut.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCompleted, "%m/%d/%Y")+7+round(Street.Lights.AllOut.Pois$Duration/2,0),3,4))[which(Street.Lights.AllOut.Pois$Time=="AFTER")] 
+Street.Lights.AllOut.Pois$Year[which(Street.Lights.AllOut.Pois$Time=="BEFORE")] <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCreated, "%Y-%m-%d")-22,3,4))[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]  
+Street.Lights.AllOut.Pois$Year[which(Street.Lights.AllOut.Pois$Time=="DURING")] <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCreated, "%Y-%m-%d")+round(Street.Lights.AllOut.Pois$Duration/2,0),3,4))[which(Street.Lights.AllOut.Pois$Time=="DURING")] 
+Street.Lights.AllOut.Pois$Year[which(Street.Lights.AllOut.Pois$Time=="AFTER")]  <- as.numeric(substr(as.Date(Street.Lights.AllOut.Pois$DateCompleted, "%Y-%m-%d")+7+round(Street.Lights.AllOut.Pois$Duration/2,0),3,4))[which(Street.Lights.AllOut.Pois$Time=="AFTER")] 
 
 Street.Lights.AllOut.Pois$Mar12 <- as.numeric(Street.Lights.AllOut.Pois$Month==3)  * as.numeric(Street.Lights.AllOut.Pois$Year==12)
 Street.Lights.AllOut.Pois$Apr12 <- as.numeric(Street.Lights.AllOut.Pois$Month==4)  * as.numeric(Street.Lights.AllOut.Pois$Year==12)
@@ -806,7 +807,7 @@ Fit.AllOut.MotorVehicleTheft.Seas <- glmmboot(MotorVehicleTheft ~ offset(log(Dur
 Fit.AllOut.Robbery.Seas           <- glmmboot(Robbery           ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
 Fit.AllOut.Assault.Seas           <- glmmboot(Assault           ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
 Fit.AllOut.Burglary.Seas          <- glmmboot(Burglary          ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
-Fit.AllOut.Homicide.Seas          <- glmmboot(Homicide          ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+#Fit.AllOut.Homicide.Seas          <- glmmboot(Homicide          ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
 Fit.AllOut.DeceptivePractice.Seas <- glmmboot(DeceptivePractice ~ offset(log(Duration)) + OutageInd + Apr12 + May12 + Jun12 + Jul12 + Aug12 + Sep12 + Oct12 + Nov12 + Dec12 + Jan13 + Feb13 + Mar13 + Apr13 + May13 + Jun13 + Jul13, cluster=Service.Request.No, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
 Summary.Table.AllOut$PctDiff.Seas <- numeric(nrow(Summary.Table.AllOut))
 Summary.Table.AllOut$LL.Seas <- numeric(nrow(Summary.Table.AllOut))
@@ -822,7 +823,7 @@ Summary.Table.AllOut$PctDiff.Seas[6]  <- 100*exp(Fit.AllOut.MotorVehicleTheft.Se
 Summary.Table.AllOut$PctDiff.Seas[7]  <- 100*exp(Fit.AllOut.Robbery.Seas$coef[1])-100
 Summary.Table.AllOut$PctDiff.Seas[8]  <- 100*exp(Fit.AllOut.Assault.Seas$coef[1])-100
 Summary.Table.AllOut$PctDiff.Seas[9]  <- 100*exp(Fit.AllOut.Burglary.Seas$coef[1])-100
-Summary.Table.AllOut$PctDiff.Seas[10] <- 100*exp(Fit.AllOut.Homicide.Seas$coef[1])-100
+#Summary.Table.AllOut$PctDiff.Seas[10] <- 100*exp(Fit.AllOut.Homicide.Seas$coef[1])-100
 Summary.Table.AllOut$PctDiff.Seas[11] <- 100*exp(Fit.AllOut.DeceptivePractice.Seas$coef[1])-100
 Summary.Table.AllOut$p.value.Seas[1]  <- 2*pt(-abs(Fit.AllOut.AllCrimes.Seas$coef[1]/Fit.AllOut.AllCrimes.Seas$sd[1]),df=length(Fit.AllOut.AllCrimes.Seas$pred-1))
 Summary.Table.AllOut$p.value.Seas[2]  <- 2*pt(-abs(Fit.AllOut.Theft.Seas$coef[1]/Fit.AllOut.Theft.Seas$sd[1]),df=length(Fit.AllOut.Theft.Seas$pred-1))
@@ -833,7 +834,7 @@ Summary.Table.AllOut$p.value.Seas[6]  <- 2*pt(-abs(Fit.AllOut.MotorVehicleTheft.
 Summary.Table.AllOut$p.value.Seas[7]  <- 2*pt(-abs(Fit.AllOut.Robbery.Seas$coef[1]/Fit.AllOut.Robbery.Seas$sd[1]),df=length(Fit.AllOut.Robbery.Seas$pred-1))
 Summary.Table.AllOut$p.value.Seas[8]  <- 2*pt(-abs(Fit.AllOut.Assault.Seas$coef[1]/Fit.AllOut.Assault.Seas$sd[1]),df=length(Fit.AllOut.Assault.Seas$pred-1))
 Summary.Table.AllOut$p.value.Seas[9]  <- 2*pt(-abs(Fit.AllOut.Burglary.Seas$coef[1]/Fit.AllOut.Burglary.Seas$sd[1]),df=length(Fit.AllOut.Burglary.Seas$pred-1))
-Summary.Table.AllOut$p.value.Seas[10] <- 2*pt(-abs(Fit.AllOut.Homicide.Seas$coef[1]/Fit.AllOut.Homicide.Seas$sd[1]),df=length(Fit.AllOut.Homicide.Seas$pred-1))
+#Summary.Table.AllOut$p.value.Seas[10] <- 2*pt(-abs(Fit.AllOut.Homicide.Seas$coef[1]/Fit.AllOut.Homicide.Seas$sd[1]),df=length(Fit.AllOut.Homicide.Seas$pred-1))
 Summary.Table.AllOut$p.value.Seas[11] <- 2*pt(-abs(Fit.AllOut.DeceptivePractice.Seas$coef[1]/Fit.AllOut.DeceptivePractice.Seas$sd[1]),df=length(Fit.AllOut.DeceptivePractice.Seas$pred-1))
 Summary.Table.AllOut$LL.Seas[1]  <- 100*exp(Fit.AllOut.AllCrimes.Seas$coef[1]         - qt(.975, length(Fit.AllOut.AllCrimes.Seas$pred-1))        *Fit.AllOut.AllCrimes.Seas$sd[1])        -100
 Summary.Table.AllOut$LL.Seas[2]  <- 100*exp(Fit.AllOut.Theft.Seas$coef[1]             - qt(.975, length(Fit.AllOut.Theft.Seas$pred-1))            *Fit.AllOut.Theft.Seas$sd[1])            -100
@@ -844,7 +845,7 @@ Summary.Table.AllOut$LL.Seas[6]  <- 100*exp(Fit.AllOut.MotorVehicleTheft.Seas$co
 Summary.Table.AllOut$LL.Seas[7]  <- 100*exp(Fit.AllOut.Robbery.Seas$coef[1]           - qt(.975, length(Fit.AllOut.Robbery.Seas$pred-1))          *Fit.AllOut.Robbery.Seas$sd[1])          -100
 Summary.Table.AllOut$LL.Seas[8]  <- 100*exp(Fit.AllOut.Assault.Seas$coef[1]           - qt(.975, length(Fit.AllOut.Assault.Seas$pred-1))          *Fit.AllOut.Assault.Seas$sd[1])          -100
 Summary.Table.AllOut$LL.Seas[9]  <- 100*exp(Fit.AllOut.Burglary.Seas$coef[1]          - qt(.975, length(Fit.AllOut.Burglary.Seas$pred-1))         *Fit.AllOut.Burglary.Seas$sd[1])         -100
-Summary.Table.AllOut$LL.Seas[10] <- 100*exp(Fit.AllOut.Homicide.Seas$coef[1]          - qt(.975, length(Fit.AllOut.Homicide.Seas$pred-1))         *Fit.AllOut.Homicide.Seas$sd[1])         -100
+#Summary.Table.AllOut$LL.Seas[10] <- 100*exp(Fit.AllOut.Homicide.Seas$coef[1]          - qt(.975, length(Fit.AllOut.Homicide.Seas$pred-1))         *Fit.AllOut.Homicide.Seas$sd[1])         -100
 Summary.Table.AllOut$LL.Seas[11] <- 100*exp(Fit.AllOut.DeceptivePractice.Seas$coef[1] - qt(.975, length(Fit.AllOut.DeceptivePractice.Seas$pred-1))*Fit.AllOut.DeceptivePractice.Seas$sd[1])-100
 Summary.Table.AllOut$UL.Seas[1]  <- 100*exp(Fit.AllOut.AllCrimes.Seas$coef[1]         + qt(.975, length(Fit.AllOut.AllCrimes.Seas$pred-1))        *Fit.AllOut.AllCrimes.Seas$sd[1])        -100
 Summary.Table.AllOut$UL.Seas[2]  <- 100*exp(Fit.AllOut.Theft.Seas$coef[1]             + qt(.975, length(Fit.AllOut.Theft.Seas$pred-1))            *Fit.AllOut.Theft.Seas$sd[1])            -100
@@ -855,7 +856,7 @@ Summary.Table.AllOut$UL.Seas[6]  <- 100*exp(Fit.AllOut.MotorVehicleTheft.Seas$co
 Summary.Table.AllOut$UL.Seas[7]  <- 100*exp(Fit.AllOut.Robbery.Seas$coef[1]           + qt(.975, length(Fit.AllOut.Robbery.Seas$pred-1))          *Fit.AllOut.Robbery.Seas$sd[1])          -100
 Summary.Table.AllOut$UL.Seas[8]  <- 100*exp(Fit.AllOut.Assault.Seas$coef[1]           + qt(.975, length(Fit.AllOut.Assault.Seas$pred-1))          *Fit.AllOut.Assault.Seas$sd[1])          -100
 Summary.Table.AllOut$UL.Seas[9]  <- 100*exp(Fit.AllOut.Burglary.Seas$coef[1]          + qt(.975, length(Fit.AllOut.Burglary.Seas$pred-1))         *Fit.AllOut.Burglary.Seas$sd[1])         -100
-Summary.Table.AllOut$UL.Seas[10] <- 100*exp(Fit.AllOut.Homicide.Seas$coef[1]          + qt(.975, length(Fit.AllOut.Homicide.Seas$pred-1))         *Fit.AllOut.Homicide.Seas$sd[1])         -100
+#Summary.Table.AllOut$UL.Seas[10] <- 100*exp(Fit.AllOut.Homicide.Seas$coef[1]          + qt(.975, length(Fit.AllOut.Homicide.Seas$pred-1))         *Fit.AllOut.Homicide.Seas$sd[1])         -100
 Summary.Table.AllOut$UL.Seas[11] <- 100*exp(Fit.AllOut.DeceptivePractice.Seas$coef[1] + qt(.975, length(Fit.AllOut.DeceptivePractice.Seas$pred-1))*Fit.AllOut.DeceptivePractice.Seas$sd[1])-100
 Summary.Table.AllOut$star.Seas[which(Summary.Table.AllOut$p.value.Seas<0.01)]                                           <- rep("**", length(which(Summary.Table.AllOut$p.value.Seas<0.01)))
 Summary.Table.AllOut$star.Seas[which(Summary.Table.AllOut$p.value.Seas<0.05 & Summary.Table.AllOut$p.value.Seas>=0.01)] <- rep("*" , length(which(Summary.Table.AllOut$p.value.Seas<0.05 & Summary.Table.AllOut$p.value.Seas>=0.01)))
