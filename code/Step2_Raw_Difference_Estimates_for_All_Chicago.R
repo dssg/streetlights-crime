@@ -42,9 +42,9 @@ Street.Lights.AllOut <- Street.Lights.AllOut[Street.Lights.AllOut$community_area
 
 
 #Create Summary Tables
-Summary.Table.Alley  <- data.frame(matrix(ncol = 4, nrow = 11), row.names = c("All Crimes (No Deceptive Practice)", 
+Summary.Table.Alley  <- data.frame(matrix(ncol = 4, nrow = 8), row.names = c("All Crimes (No Deceptive Practice)", 
                                                                               "Theft", "Narcotics", "Battery", "Criminal Damage", "Motor Vehicle Theft", 
-                                                                               "Robbery", "Assault", "Burglary", "Homicide", "Deceptive Practice"))
+                                                                               "Robbery", "Assault"))
 Summary.Table.OneOut <- data.frame(matrix(ncol = 4, nrow = 11), row.names = c("All Crimes (No Deceptive Practice)", 
                                                                               "Theft", "Narcotics", "Battery", "Criminal Damage", "Motor Vehicle Theft", 
                                                                               "Robbery", "Assault", "Burglary", "Homicide", "Deceptive Practice"))
@@ -65,9 +65,6 @@ Summary.Table.Alley[5,1]  <- 30*sum(Alley.Lights$CriminalDamage.Before)   /(30*n
 Summary.Table.Alley[6,1]  <- 30*sum(Alley.Lights$MotorVehicleTheft.Before)/(30*nrow(Alley.Lights))
 Summary.Table.Alley[7,1]  <- 30*sum(Alley.Lights$Robbery.Before)          /(30*nrow(Alley.Lights))
 Summary.Table.Alley[8,1]  <- 30*sum(Alley.Lights$Assault.Before)          /(30*nrow(Alley.Lights))
-Summary.Table.Alley[9,1]  <- 30*sum(Alley.Lights$Burglary.Before)         /(30*nrow(Alley.Lights))
-Summary.Table.Alley[10,1] <- 30*sum(Alley.Lights$Homicide.Before)         /(30*nrow(Alley.Lights))
-Summary.Table.Alley[11,1] <- 30*sum(Alley.Lights$DeceptivePractice.Before)/(30*nrow(Alley.Lights))
 Summary.Table.Alley[1,2]  <- 30*sum(Alley.Lights$Crimes.All.During)       /sum(Alley.Lights$OutageDuration)
 Summary.Table.Alley[2,2]  <- 30*sum(Alley.Lights$Theft.During)            /sum(Alley.Lights$OutageDuration)
 Summary.Table.Alley[3,2]  <- 30*sum(Alley.Lights$Narcotics.During)        /sum(Alley.Lights$OutageDuration)
@@ -76,9 +73,6 @@ Summary.Table.Alley[5,2]  <- 30*sum(Alley.Lights$CriminalDamage.During)   /sum(A
 Summary.Table.Alley[6,2]  <- 30*sum(Alley.Lights$MotorVehicleTheft.During)/sum(Alley.Lights$OutageDuration)
 Summary.Table.Alley[7,2]  <- 30*sum(Alley.Lights$Robbery.During)          /sum(Alley.Lights$OutageDuration)
 Summary.Table.Alley[8,2]  <- 30*sum(Alley.Lights$Assault.During)          /sum(Alley.Lights$OutageDuration)
-Summary.Table.Alley[9,2]  <- 30*sum(Alley.Lights$Burglary.During)         /sum(Alley.Lights$OutageDuration)
-Summary.Table.Alley[10,2] <- 30*sum(Alley.Lights$Homicide.During)         /sum(Alley.Lights$OutageDuration)
-Summary.Table.Alley[11,2] <- 30*sum(Alley.Lights$DeceptivePractice.During)/sum(Alley.Lights$OutageDuration)
 Summary.Table.Alley[1,3]  <- 30*sum(Alley.Lights$Crimes.All.After)        /sum(Alley.Lights$After.Period.Duration)
 Summary.Table.Alley[2,3]  <- 30*sum(Alley.Lights$Theft.After)            /sum(Alley.Lights$After.Period.Duration)
 Summary.Table.Alley[3,3]  <- 30*sum(Alley.Lights$Narcotics.After)         /sum(Alley.Lights$After.Period.Duration)
@@ -87,9 +81,6 @@ Summary.Table.Alley[5,3]  <- 30*sum(Alley.Lights$CriminalDamage.After)    /sum(A
 Summary.Table.Alley[6,3]  <- 30*sum(Alley.Lights$MotorVehicleTheft.After) /sum(Alley.Lights$After.Period.Duration)
 Summary.Table.Alley[7,3]  <- 30*sum(Alley.Lights$Robbery.After)           /sum(Alley.Lights$After.Period.Duration)
 Summary.Table.Alley[8,3]  <- 30*sum(Alley.Lights$Assault.After)           /sum(Alley.Lights$After.Period.Duration)
-Summary.Table.Alley[9,3]  <- 30*sum(Alley.Lights$Burglary.After)          /sum(Alley.Lights$After.Period.Duration)
-Summary.Table.Alley[10,3] <- 30*sum(Alley.Lights$Homicide.After)          /sum(Alley.Lights$After.Period.Duration)
-Summary.Table.Alley[11,3] <- 30*sum(Alley.Lights$DeceptivePractice.After) /sum(Alley.Lights$After.Period.Duration)
 Summary.Table.Alley[1,4]  <- 30*(sum(Alley.Lights$Crimes.All.Before)       +sum(Alley.Lights$Crimes.All.After))       /(30*nrow(Alley.Lights)+sum(Alley.Lights$After.Period.Duration))
 Summary.Table.Alley[2,4]  <- 30*(sum(Alley.Lights$Theft.Before)            +sum(Alley.Lights$Theft.After))           /(30*nrow(Alley.Lights)+sum(Alley.Lights$After.Period.Duration))
 Summary.Table.Alley[3,4]  <- 30*(sum(Alley.Lights$Narcotics.Before)        +sum(Alley.Lights$Narcotics.After))        /(30*nrow(Alley.Lights)+sum(Alley.Lights$After.Period.Duration))
@@ -98,10 +89,6 @@ Summary.Table.Alley[5,4]  <- 30*(sum(Alley.Lights$CriminalDamage.Before)   +sum(
 Summary.Table.Alley[6,4]  <- 30*(sum(Alley.Lights$MotorVehicleTheft.Before)+sum(Alley.Lights$MotorVehicleTheft.After))/(30*nrow(Alley.Lights)+sum(Alley.Lights$After.Period.Duration))
 Summary.Table.Alley[7,4]  <- 30*(sum(Alley.Lights$Robbery.Before)          +sum(Alley.Lights$Robbery.After))          /(30*nrow(Alley.Lights)+sum(Alley.Lights$After.Period.Duration))
 Summary.Table.Alley[8,4]  <- 30*(sum(Alley.Lights$Assault.Before)          +sum(Alley.Lights$Assault.After))          /(30*nrow(Alley.Lights)+sum(Alley.Lights$After.Period.Duration))
-Summary.Table.Alley[9,4]  <- 30*(sum(Alley.Lights$Burglary.Before)         +sum(Alley.Lights$Burglary.After))         /(30*nrow(Alley.Lights)+sum(Alley.Lights$After.Period.Duration))
-Summary.Table.Alley[10,4] <- 30*(sum(Alley.Lights$Homicide.Before)         +sum(Alley.Lights$Homicide.After))         /(30*nrow(Alley.Lights)+sum(Alley.Lights$After.Period.Duration))
-Summary.Table.Alley[11,4] <- 30*(sum(Alley.Lights$DeceptivePractice.Before)+sum(Alley.Lights$DeceptivePractice.After))/(30*nrow(Alley.Lights)+sum(Alley.Lights$After.Period.Duration))
-
 
 Summary.Table.OneOut[1,1]  <- 30*sum(Street.Lights.OneOut$Crimes.All.Before)       /(30*nrow(Street.Lights.OneOut))
 Summary.Table.OneOut[2,1]  <- 30*sum(Street.Lights.OneOut$Theft.Before)           /(30*nrow(Street.Lights.OneOut))
@@ -217,9 +204,6 @@ Alley.Lights.Pois$CriminalDamage    <- numeric(nrow(Alley.Lights.Pois))
 Alley.Lights.Pois$MotorVehicleTheft <- numeric(nrow(Alley.Lights.Pois))
 Alley.Lights.Pois$Robbery           <- numeric(nrow(Alley.Lights.Pois))
 Alley.Lights.Pois$Assault           <- numeric(nrow(Alley.Lights.Pois))
-Alley.Lights.Pois$Burglary          <- numeric(nrow(Alley.Lights.Pois))
-Alley.Lights.Pois$Homicide          <- numeric(nrow(Alley.Lights.Pois))
-Alley.Lights.Pois$DeceptivePractice <- numeric(nrow(Alley.Lights.Pois))
 Alley.Lights.Pois$Duration          <- numeric(nrow(Alley.Lights.Pois))
 Alley.Lights.Pois$AllCrimes[which(Alley.Lights.Pois$Time=="BEFORE")]         <- Alley.Lights.Pois$Crimes.All.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
 Alley.Lights.Pois$Theft[which(Alley.Lights.Pois$Time=="BEFORE")]            <- Alley.Lights.Pois$Theft.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
@@ -229,9 +213,6 @@ Alley.Lights.Pois$CriminalDamage[which(Alley.Lights.Pois$Time=="BEFORE")]    <- 
 Alley.Lights.Pois$MotorVehicleTheft[which(Alley.Lights.Pois$Time=="BEFORE")] <- Alley.Lights.Pois$MotorVehicleTheft.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
 Alley.Lights.Pois$Robbery[which(Alley.Lights.Pois$Time=="BEFORE")]           <- Alley.Lights.Pois$Robbery.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
 Alley.Lights.Pois$Assault[which(Alley.Lights.Pois$Time=="BEFORE")]           <- Alley.Lights.Pois$Assault.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
-Alley.Lights.Pois$Burglary[which(Alley.Lights.Pois$Time=="BEFORE")]          <- Alley.Lights.Pois$Burglary.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
-Alley.Lights.Pois$Homicide[which(Alley.Lights.Pois$Time=="BEFORE")]          <- Alley.Lights.Pois$Homicide.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
-Alley.Lights.Pois$DeceptivePractice[which(Alley.Lights.Pois$Time=="BEFORE")] <- Alley.Lights.Pois$DeceptivePractice.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
 Alley.Lights.Pois$Duration[which(Alley.Lights.Pois$Time=="BEFORE")]          <- rep(30, length(which(Alley.Lights.Pois$Time=="BEFORE")))
 
 Alley.Lights.Pois$AllCrimes[which(Alley.Lights.Pois$Time=="DURING")]         <- Alley.Lights.Pois$Crimes.All.During[which(Alley.Lights.Pois$Time=="DURING")]
@@ -242,9 +223,6 @@ Alley.Lights.Pois$CriminalDamage[which(Alley.Lights.Pois$Time=="DURING")]    <- 
 Alley.Lights.Pois$MotorVehicleTheft[which(Alley.Lights.Pois$Time=="DURING")] <- Alley.Lights.Pois$MotorVehicleTheft.During[which(Alley.Lights.Pois$Time=="DURING")]
 Alley.Lights.Pois$Robbery[which(Alley.Lights.Pois$Time=="DURING")]           <- Alley.Lights.Pois$Robbery.During[which(Alley.Lights.Pois$Time=="DURING")]
 Alley.Lights.Pois$Assault[which(Alley.Lights.Pois$Time=="DURING")]           <- Alley.Lights.Pois$Assault.During[which(Alley.Lights.Pois$Time=="DURING")]
-Alley.Lights.Pois$Burglary[which(Alley.Lights.Pois$Time=="DURING")]          <- Alley.Lights.Pois$Burglary.During[which(Alley.Lights.Pois$Time=="DURING")]
-Alley.Lights.Pois$Homicide[which(Alley.Lights.Pois$Time=="DURING")]          <- Alley.Lights.Pois$Homicide.During[which(Alley.Lights.Pois$Time=="DURING")]
-Alley.Lights.Pois$DeceptivePractice[which(Alley.Lights.Pois$Time=="DURING")] <- Alley.Lights.Pois$DeceptivePractice.During[which(Alley.Lights.Pois$Time=="DURING")]
 Alley.Lights.Pois$Duration[which(Alley.Lights.Pois$Time=="DURING")]          <- Alley.Lights.Pois$OutageDuration[which(Alley.Lights.Pois$Time=="DURING")]
 
 Alley.Lights.Pois$AllCrimes[which(Alley.Lights.Pois$Time=="AFTER")]         <- Alley.Lights.Pois$Crimes.All.After[which(Alley.Lights.Pois$Time=="AFTER")]
@@ -255,14 +233,11 @@ Alley.Lights.Pois$CriminalDamage[which(Alley.Lights.Pois$Time=="AFTER")]    <- A
 Alley.Lights.Pois$MotorVehicleTheft[which(Alley.Lights.Pois$Time=="AFTER")] <- Alley.Lights.Pois$MotorVehicleTheft.After[which(Alley.Lights.Pois$Time=="AFTER")]
 Alley.Lights.Pois$Robbery[which(Alley.Lights.Pois$Time=="AFTER")]           <- Alley.Lights.Pois$Robbery.After[which(Alley.Lights.Pois$Time=="AFTER")]
 Alley.Lights.Pois$Assault[which(Alley.Lights.Pois$Time=="AFTER")]           <- Alley.Lights.Pois$Assault.After[which(Alley.Lights.Pois$Time=="AFTER")]
-Alley.Lights.Pois$Burglary[which(Alley.Lights.Pois$Time=="AFTER")]          <- Alley.Lights.Pois$Burglary.After[which(Alley.Lights.Pois$Time=="AFTER")]
-Alley.Lights.Pois$Homicide[which(Alley.Lights.Pois$Time=="AFTER")]          <- Alley.Lights.Pois$Homicide.After[which(Alley.Lights.Pois$Time=="AFTER")]
-Alley.Lights.Pois$DeceptivePractice[which(Alley.Lights.Pois$Time=="AFTER")] <- Alley.Lights.Pois$DeceptivePractice.After[which(Alley.Lights.Pois$Time=="AFTER")]
 Alley.Lights.Pois$Duration[which(Alley.Lights.Pois$Time=="AFTER")]          <- Alley.Lights.Pois$After.Period.Duration[which(Alley.Lights.Pois$Time=="AFTER")]
 
 Alley.Lights.Pois <- Alley.Lights.Pois[,c("Type", "Service.Request.No","DateCreated", "DateCompleted", "Location", "Outcome", "x_coord", "y_coord", "zip_code", "ward",
                                            "police_district", "community_area", "Time", "AllCrimes", "Theft", "Narcotics", "Battery", "CriminalDamage", 
-                                           "MotorVehicleTheft", "Robbery", "Assault", "Burglary", "Homicide", "DeceptivePractice", "Duration", "OutageDuration")]
+                                           "MotorVehicleTheft", "Robbery", "Assault", "Duration", "OutageDuration")]
 Alley.Lights.Pois$OutageInd <- numeric(nrow(Alley.Lights.Pois))
 Alley.Lights.Pois$OutageInd[which(Alley.Lights.Pois$Time=="DURING")] <- rep(1, length(which(Alley.Lights.Pois$Time=="DURING")))
 
@@ -274,9 +249,6 @@ Fit.Alley.CriminalDamage    <- glm(CriminalDamage    ~ offset(log(Duration)) + O
 Fit.Alley.MotorVehicleTheft <- glm(MotorVehicleTheft ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
 Fit.Alley.Robbery           <- glm(Robbery           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
 Fit.Alley.Assault           <- glm(Assault           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
-Fit.Alley.Burglary          <- glm(Burglary          ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
-Fit.Alley.Homicide          <- glm(Homicide          ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
-Fit.Alley.DeceptivePractice <- glm(DeceptivePractice ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
 Summary.Table.Alley$LL <- numeric(nrow(Summary.Table.Alley))
 Summary.Table.Alley$UL <- numeric(nrow(Summary.Table.Alley))
 Summary.Table.Alley$p.value <- numeric(nrow(Summary.Table.Alley))
@@ -289,9 +261,6 @@ Summary.Table.Alley$p.value[5]  <- summary(Fit.Alley.CriminalDamage)$coef[2,4]
 Summary.Table.Alley$p.value[6]  <- summary(Fit.Alley.MotorVehicleTheft)$coef[2,4]
 Summary.Table.Alley$p.value[7]  <- summary(Fit.Alley.Robbery)$coef[2,4]
 Summary.Table.Alley$p.value[8]  <- summary(Fit.Alley.Assault)$coef[2,4]
-Summary.Table.Alley$p.value[9]  <- summary(Fit.Alley.Burglary)$coef[2,4]
-Summary.Table.Alley$p.value[10] <- summary(Fit.Alley.Homicide)$coef[2,4]
-Summary.Table.Alley$p.value[11] <- summary(Fit.Alley.DeceptivePractice)$coef[2,4]
 Summary.Table.Alley$LL[1]  <- 100*exp(Fit.Alley.AllCrimes$coefficients[2]         - qt(.975, length(Fit.Alley.AllCrimes$residuals-1))        *summary(Fit.Alley.AllCrimes)$coef[2,2])        -100
 Summary.Table.Alley$LL[2]  <- 100*exp(Fit.Alley.Theft$coefficients[2]            - qt(.975, length(Fit.Alley.Theft$residuals-1))           *summary(Fit.Alley.Theft)$coef[2,2])           -100
 Summary.Table.Alley$LL[3]  <- 100*exp(Fit.Alley.Narcotics$coefficients[2]         - qt(.975, length(Fit.Alley.Narcotics$residuals-1))        *summary(Fit.Alley.Narcotics)$coef[2,2])        -100
@@ -300,9 +269,6 @@ Summary.Table.Alley$LL[5]  <- 100*exp(Fit.Alley.CriminalDamage$coefficients[2]  
 Summary.Table.Alley$LL[6]  <- 100*exp(Fit.Alley.MotorVehicleTheft$coefficients[2] - qt(.975, length(Fit.Alley.MotorVehicleTheft$residuals-1))*summary(Fit.Alley.MotorVehicleTheft)$coef[2,2])-100
 Summary.Table.Alley$LL[7]  <- 100*exp(Fit.Alley.Robbery$coefficients[2]           - qt(.975, length(Fit.Alley.Robbery$residuals-1))          *summary(Fit.Alley.Robbery)$coef[2,2])          -100
 Summary.Table.Alley$LL[8]  <- 100*exp(Fit.Alley.Assault$coefficients[2]           - qt(.975, length(Fit.Alley.Assault$residuals-1))          *summary(Fit.Alley.Assault)$coef[2,2])          -100
-Summary.Table.Alley$LL[9]  <- 100*exp(Fit.Alley.Burglary$coefficients[2]          - qt(.975, length(Fit.Alley.Burglary$residuals-1))         *summary(Fit.Alley.Burglary)$coef[2,2])         -100
-Summary.Table.Alley$LL[10] <- 100*exp(Fit.Alley.Homicide$coefficients[2]          - qt(.975, length(Fit.Alley.Homicide$residuals-1))         *summary(Fit.Alley.Homicide)$coef[2,2])         -100
-Summary.Table.Alley$LL[11] <- 100*exp(Fit.Alley.DeceptivePractice$coefficients[2] - qt(.975, length(Fit.Alley.DeceptivePractice$residuals-1))*summary(Fit.Alley.DeceptivePractice)$coef[2,2])-100
 Summary.Table.Alley$UL[1]  <- 100*exp(Fit.Alley.AllCrimes$coefficients[2]         + qt(.975, length(Fit.Alley.AllCrimes$residuals-1))        *summary(Fit.Alley.AllCrimes)$coef[2,2])        -100
 Summary.Table.Alley$UL[2]  <- 100*exp(Fit.Alley.Theft$coefficients[2]            + qt(.975, length(Fit.Alley.Theft$residuals-1))           *summary(Fit.Alley.Theft)$coef[2,2])           -100
 Summary.Table.Alley$UL[3]  <- 100*exp(Fit.Alley.Narcotics$coefficients[2]         + qt(.975, length(Fit.Alley.Narcotics$residuals-1))        *summary(Fit.Alley.Narcotics)$coef[2,2])        -100
@@ -311,9 +277,6 @@ Summary.Table.Alley$UL[5]  <- 100*exp(Fit.Alley.CriminalDamage$coefficients[2]  
 Summary.Table.Alley$UL[6]  <- 100*exp(Fit.Alley.MotorVehicleTheft$coefficients[2] + qt(.975, length(Fit.Alley.MotorVehicleTheft$residuals-1))*summary(Fit.Alley.MotorVehicleTheft)$coef[2,2])-100
 Summary.Table.Alley$UL[7]  <- 100*exp(Fit.Alley.Robbery$coefficients[2]           + qt(.975, length(Fit.Alley.Robbery$residuals-1))          *summary(Fit.Alley.Robbery)$coef[2,2])          -100
 Summary.Table.Alley$UL[8]  <- 100*exp(Fit.Alley.Assault$coefficients[2]           + qt(.975, length(Fit.Alley.Assault$residuals-1))          *summary(Fit.Alley.Assault)$coef[2,2])          -100
-Summary.Table.Alley$UL[9]  <- 100*exp(Fit.Alley.Burglary$coefficients[2]          + qt(.975, length(Fit.Alley.Burglary$residuals-1))         *summary(Fit.Alley.Burglary)$coef[2,2])         -100
-Summary.Table.Alley$UL[10] <- 100*exp(Fit.Alley.Homicide$coefficients[2]          + qt(.975, length(Fit.Alley.Homicide$residuals-1))         *summary(Fit.Alley.Homicide)$coef[2,2])         -100
-Summary.Table.Alley$UL[11] <- 100*exp(Fit.Alley.DeceptivePractice$coefficients[2] + qt(.975, length(Fit.Alley.DeceptivePractice$residuals-1))*summary(Fit.Alley.DeceptivePractice)$coef[2,2])         -100
 Summary.Table.Alley$star[which(Summary.Table.Alley$p.value<0.01)]                                     <- rep("**", length(which(Summary.Table.Alley$p.value<0.01)))
 Summary.Table.Alley$star[which(Summary.Table.Alley$p.value<0.05 & Summary.Table.Alley$p.value>=0.01)] <- rep("*" , length(which(Summary.Table.Alley$p.value<0.05 & Summary.Table.Alley$p.value>=0.01)))
 
