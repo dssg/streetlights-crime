@@ -547,9 +547,9 @@ Summary.Table.OneOut[,-c(10)] <- round(Summary.Table.OneOut[,-c(10)], digits=3)
 Summary.Table.AllOut[,-c(10)] <- round(Summary.Table.AllOut[,-c(10)], digits=3)
 
 # Export Tables for Community Area Level Estimates
-write.csv(Alley.Lights.Pois, "Alley_Lights_and_Crime_for_Comm_Area_Est.csv")
-write.csv(Street.Lights.OneOut.Pois, "Street_Lights_One_Out_and_Crime_for_Comm_Area_Est.csv")
-write.csv(Street.Lights.AllOut.Pois, "Street_Lights_All_Out_and_Crime_for_Comm_Area_Est.csv")
+write.csv(Alley.Lights.Pois, "Alley_Lights_and_Crime_for_Police_District_Est.csv")
+write.csv(Street.Lights.OneOut.Pois, "Street_Lights_One_Out_and_Crime_for_Police_District_Est.csv")
+write.csv(Street.Lights.AllOut.Pois, "Street_Lights_All_Out_and_Crime_for_Police_District_Est.csv")
 
 
 
