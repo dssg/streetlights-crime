@@ -15,9 +15,9 @@ The [Chicago Department of Transportation](http://www.cityofchicago.org/city/en/
 
 The fundamental challenge for this study is that different areas may be both high crime and susceptible to outages.  Therefore, raw correlations may tend to overestimate the impact of outages upon crime.
 
-We therefore estimate the association between outages and crime by comparing crime rates during outages in blocks affected by outages to crime rates in the same blocks immediately before and after the outage.  This method has the strong advantage that each outage-affected blocks serves as its own control.
+We therefore estimate the association between outages and crime by comparing crime rates during outages in blocks affected by outages to crime rates in the same blocks immediately before and after the outage.  This method has the strong advantage that each outage-affected block serves as its own control.
 
-The approach also partially adjusts for variation in crime rates over time by comparing crime rates in time periods close to each other.  However, our best model includes further adjustments for the crime time trend.
+The approach also partially adjusts for variation in crime rates over time by comparing crime rates in time periods close to each other.  However, we also examine a model that includes further adjustments for the crime time trend.
 
 Specifically, we use Poisson Generalized Linear Models, which are useful for studying counts and rates.  Crime rates are modeled as a function of an outage indicator variable, fixed effects for each outage area, and a full set of monthly indicator variables to adjust estimates for the crime time trend.
 
