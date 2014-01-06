@@ -11,11 +11,11 @@ The [Chicago Department of Transportation](http://www.cityofchicago.org/city/en/
 
 **[Read more about the problem in the wiki](https://github.com/dssg/streetlights-crime/wiki/Problem:-Why-Study-Outages-and-Crime%3F)**
 
-## The solution: comparative analysis, poisson regression
+## The solution: within block analysis, poisson regression
 
 The fundamental challenge for this study is that different areas may be both high crime and susceptible to outages.  Therefore, raw correlations may tend to overestimate the impact of outages upon crime.
 
-We therefore estimate the association between outages and crime by comparing crime rates during outages in areas affected by outages to crime rates in the same areas immediately before and after the outage.  This method has the strong advantage that each outage-affected area serves as its own control.
+We therefore estimate the association between outages and crime by comparing crime rates during outages in blocks affected by outages to crime rates in the same blocks immediately before and after the outage.  This method has the strong advantage that each outage-affected blocks serves as its own control.
 
 The approach also partially adjusts for variation in crime rates over time by comparing crime rates in time periods close to each other.  However, our best model includes further adjustments for the crime time trend.
 
