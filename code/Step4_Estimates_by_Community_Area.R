@@ -72,37 +72,6 @@ Table.AllOut[,2] <- round(as.numeric(Table.AllOut[,2]),3)
 Table.AllOut[,4] <- round(as.numeric(Table.AllOut[,4]),3)
 Table.AllOut[,5] <- round(as.numeric(Table.AllOut[,5]),3)
 
-Table.OneOut[is.na(Table.OneOut)] <- ""   
-Table.AllOut[is.na(Table.AllOut)] <- ""  
-
-
-
-#Open Street Lights Out and Crime
-Street.Lights.AllOut<- read.csv(file="street-all.csv", head=TRUE)
-
-
-#Change Community Areas to Numeric
-Street.Lights.AllOut$community_area <- as.character(Street.Lights.AllOut$community_area)
-Street.Lights.AllOut$community_area[which(nchar(Street.Lights.AllOut$community_area)==4)] <- as.numeric(substr(Street.Lights.AllOut$community_area[which(nchar(Street.Lights.AllOut$community_area)==4)],3,3))
-Street.Lights.AllOut$community_area[which(nchar(Street.Lights.AllOut$community_area)==5)] <- as.numeric(substr(Street.Lights.AllOut$community_area[which(nchar(Street.Lights.AllOut$community_area)==5)],3,4))
-
-# Remove Duplicates
-Street.Lights.AllOut         <-         Street.Lights.AllOut[!duplicated(Street.Lights.AllOut$Service.Request.No),]
-
-# Remove Community Area 0
-Street.Lights.AllOut         <-         Street.Lights.AllOut[Street.Lights.AllOut$community_area        !=0,]
-
-# Keep 6 Community Areas with Significant Results
-Street.Lights.AllOut.Signif.CommAreas <- Street.Lights.AllOut[which(Street.Lights.AllOut$community_area==16 | Street.Lights.AllOut$community_area==19 | Street.Lights.AllOut$community_area==42 | Street.Lights.AllOut$community_area==54 | Street.Lights.AllOut$community_area==66 | Street.Lights.AllOut$community_area==69),]
-Street.Lights.AllOut.Signif.CommAreas$RateNotDuring <- 30*(Street.Lights.AllOut.Signif.CommAreas$Crimes.All.Before + Street.Lights.AllOut.Signif.CommAreas$Crimes.All.After)/(30 + Street.Lights.AllOut.Signif.CommAreas$After.Period.Duration)
-Street.Lights.AllOut.Signif.CommAreas$RateDuring <- 30*Street.Lights.AllOut.Signif.CommAreas$Crimes.All.During/Street.Lights.AllOut.Signif.CommAreas$OutageDuration
-Street.Lights.AllOut.Signif.CommAreas$RateDiff <- Street.Lights.AllOut.Signif.CommAreas$RateDuring - Street.Lights.AllOut.Signif.CommAreas$RateNotDuring
-Street.Lights.AllOut.Signif.CommAreas <- Street.Lights.AllOut.Signif.CommAreas[order(-Street.Lights.AllOut.Signif.CommAreas$RateDiff),]
-Street.Lights.AllOut.Signif.CommAreas <- Street.Lights.AllOut.Signif.CommAreas[,c("Service.Request.No","DateCreated", "DateCompleted", "Location", "Outcome", "x_coord", "y_coord", "zip_code", "ward",
-                             "police_district", "community_area", "Crimes.All.Before", "Crimes.All.During", "Crimes.All.After", "RateNotDuring", "RateDuring", 
-                             "RateDiff", "After.Period.Duration", "OutageDuration")]
-Street.Lights.AllOut.Signif.CommAreas <- Street.Lights.AllOut.Signif.CommAreas[Street.Lights.AllOut.Signif.CommAreas$RateDiff>=1.5,]
-Street.Lights.AllOut.Signif.CommAreas <- Street.Lights.AllOut.Signif.CommAreas[order(Street.Lights.AllOut.Signif.CommAreas$community_area),]
 
 
 
