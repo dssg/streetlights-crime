@@ -13,9 +13,9 @@ The [Chicago Department of Transportation](http://www.cityofchicago.org/city/en/
 
 ## Methods: within block analysis, poisson regression
 
-The fundamental challenge for this study is that different areas may be both high crime and susceptible to outages.  Therefore, raw correlations may tend to overestimate the impact of outages upon crime.
+The fundamental challenge for this study is that different areas may be both high crime and susceptible to outages.  Thus, raw correlations may tend to overestimate the impact of outages upon crime.
 
-We therefore estimate the association between outages and crime by comparing crime rates during outages in blocks affected by outages to crime rates in the same blocks immediately before and after the outage.  This method has the strong advantage that each outage-affected block serves as its own control.
+We therefore estimate the association between outages and crime by comparing crime rates during outages in blocks affected by outages to crime rates in the same blocks immediately before and after the outage.  This method has the advantage that each outage-affected block serves as its own control.
 
 The approach also partially adjusts for variation in crime rates over time by comparing crime rates in time periods close to each other.  However, we also examine a model that includes further adjustments for the crime time trend.
 
