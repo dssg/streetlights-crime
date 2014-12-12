@@ -5,13 +5,13 @@
 This a [Data Science for Social Good](http://www.dssg.io) project that estimates the association between alley and street light outages and crime in Chicago over the period April 2012 - July 2013.
 
 
-## The problem: are streetlight outages associated with crime?
+## Question: are streetlight outages associated with crime?
 
 The [Chicago Department of Transportation](http://www.cityofchicago.org/city/en/depts/cdot.html) (CDOT) asked us to investigate the relationship between alley and street light outages and crime around the city.  CDOT can use the findings to determine if shortening outage durations might decrease crime.  The geographic detail we provide can be used to determine if certain outages should be prioritized in order to reduce crime. 
 
 **[Read more about the problem in the wiki](https://github.com/dssg/streetlights-crime/wiki/Problem:-Why-Study-Outages-and-Crime%3F)**
 
-## The solution: within block analysis, poisson regression
+## Methods: within block analysis, poisson regression
 
 The fundamental challenge for this study is that different areas may be both high crime and susceptible to outages.  Therefore, raw correlations may tend to overestimate the impact of outages upon crime.
 
@@ -26,7 +26,7 @@ Specifically, we use Poisson Generalized Linear Models, which are useful for stu
 
 ## The data: crime reports and streetlight outages
 
-This project uses data from the [City of Chicago Data Portal](https://data.cityofchicago.org/), which contains a variety useful City of Chicago datasets.  We believe the Data Portal allows for a rich set of important questions to be studied in a way that they could not be studied otherwise.  Further, as this project demonstrates, the data can be used to study questions that matter and that are important for department planning.
+This project uses data from the [City of Chicago Data Portal](https://data.cityofchicago.org/), which contains a variety of useful City of Chicago datasets.  We believe the Data Portal allows for a rich set of important questions to be studied in a way that they could not be studied otherwise.  Further, as this project demonstrates, the data can be used to study questions that matter and that are important for department planning.
 
 **[Read more about what data we use in the wiki](https://github.com/dssg/streetlights-crime/wiki/Data:-City-of-Chicago-Data-Portal)**
 
